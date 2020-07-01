@@ -1,0 +1,9 @@
+export declare const TITLE_HEIGHT = 25;
+export declare const X_AXIS_HEIGHT = 20;
+export declare const PADDING_LEFT = 35;
+export declare const PADDING_RIGHT = 12;
+export declare const DETAIL_PANEL_WIDTH = 120;
+export declare const TITLE_MARGIN_BOTTOM = 15;
+export declare const TICK_MARGIN = 3;
+export declare const FRONT_SIGHT_LABEL_HEIGHT = 20;
+export declare const X_FRONT_SIGHT_LABEL_PADDING = 8;

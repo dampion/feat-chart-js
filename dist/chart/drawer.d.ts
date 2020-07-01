@@ -1,0 +1,52 @@
+import { ScaleLinear } from 'd3-scale';
+import { MovableRange } from '../algorithm/range';
+import { Rect } from '../graphic/primitive';
+import { TradeTime } from '../index';
+import { Chart, YAxisDetail } from './chart';
+import { DrawerPlugin, DrawerPluginConstructor, ExclusiveDrawerPlugin, ExclusiveDrawerPluginConstructor } from './drawer-plugin';
+export interface DrawerOptions {
+    plugins: DrawerPluginConstructor[];
+    exclusivePlugins?: ExclusiveDrawerPluginConstructor[];
+    defaultExclusivePlugins?: number;
+}
+export declare class Drawer {
+    chart: Chart;
+    plugins: DrawerPlugin[];
+    exclusivePlugins: ExclusiveDrawerPlugin[];
+    context: CanvasRenderingContext2D;
+    frame: Rect;
+    chartFrame: Rect;
+    yScale: ScaleLinear<number, number>;
+    range: MovableRange<object>;
+    _selectedIndex: number;
+    minValue: number;
+    maxValue: number;
+    tradeTime: TradeTime;
+    canScale: boolean;
+    protected selectedExclusivePlugin: number;
+    protected options: DrawerOptions;
+    private _xAxisTickHeight;
+    constructor(chart: Chart, options: DrawerOptions);
+    selectedIndex: number;
+    update(): void;
+    drawFrontSight(): void;
+    resize(frame: Rect): void;
+    setRange(range: MovableRange<object>): void;
+    select(i: number): void;
+    getYAxisDetail(y: number): YAxisDetail;
+    getXAxisDetail(i: number): string;
+    count(): number;
+    nextExclusivePlugin(): void;
+    useExclusivePlugin(index: number): void;
+    topValue: () => number;
+    bottomValue: () => number;
+    protected predraw(): void;
+    protected draw(): void;
+    protected postdraw(): void;
+    readonly titleHeight: number;
+    protected xAxisTickHeight: any;
+    protected resetYScale(): void;
+    private installPlugin;
+    private pluginCall;
+}
+export declare type DrawerContructor = typeof Drawer;

@@ -1,0 +1,35 @@
+language: node_js
+node_js:
+    - "9"
+cache: yarn
+before_install:
+  - sudo apt-get -qq update
+  - sudo apt-get install build-essential libcairo2-dev libpango1.0-dev libjpeg-dev libgif-dev librsvg2-dev
+script:
+  - npm run tslint
+  - npm test
+  - npm run dist
+  - npm run example
+after_success:
+  - npm run coverage
+before_deploy:
+  - tar -czf ${TRAVIS_TAG}.tar.gz dist/finance-chart.*
+deploy:
+  - provider: pages
+    skip-cleanup: true
+    github-token: $GITHUB_TOKEN  # Set in the settings page of your repository, as a secure variable
+    local-dir: example-dist
+    on:
+      branch: master
+  - provider: releases
+    api_key: "$GITHUB_TOKEN"
+    file: "${TRAVIS_TAG}.tar.gz"
+    skip_cleanup: true
+    on:
+      tags: true
+  - provider: npm
+    email: $NPM_ACCOUNT
+    api_key: $NPM_TOKEN
+    skip_cleanup: true
+    on:
+      tags: true
